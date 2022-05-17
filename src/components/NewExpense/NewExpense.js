@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import ExpenseForm from './ExpenseForm';
+import ExpenseType from './ExpenseType';
 import './NewExpense.css';
 
 const NewExpense = (props) => {
+  const [shouldRender, setShouldRender] = useState(true);
+
   const saveExpenseDataHandler = (enteredExpenseData) => {
     const expenseData = {
       ...enteredExpenseData,
@@ -12,9 +14,17 @@ const NewExpense = (props) => {
     props.onAddExpense(expenseData);
   };
 
+  const switchType = () => {
+    setShouldRender((prevState) => !prevState);
+  };
+
   return (
     <div className="new-expense">
-      <ExpenseForm onSaveExpenseData={saveExpenseDataHandler} />
+      <ExpenseType
+        shouldRender={shouldRender}
+        switchType={switchType}
+        onSaveExpenseData={saveExpenseDataHandler}
+      />
     </div>
   );
 };
